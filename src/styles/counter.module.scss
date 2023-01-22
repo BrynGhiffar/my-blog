@@ -1,0 +1,57 @@
+@mixin glassmorphism($transparency) {
+    background: rgba(255, 255, 255, $transparency);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.counter {
+    background-color: green;
+    display: flex;
+    height: 10vh;
+    padding: 1rem;
+    border-radius: 15px;
+
+    @include glassmorphism($transparency: 0.1);
+
+    .value {
+        display: flex;
+        align-items: center;
+        padding: 0 2rem;
+        margin: 0 1rem;
+        font-size: 2rem;
+        @include glassmorphism($transparency: 0.1);
+    }
+
+    button {
+        $base-color: blue;
+
+        padding: 0 2rem;
+        background-color: $base-color;
+        border: none;
+        font-weight: bold;
+        font-size: 3rem;
+        display: flex;
+        align-items: center;
+        transition-duration: 200ms;
+        transition-timing-function: ease-out;
+        transition-property: all;
+        cursor: pointer;
+        @include glassmorphism($transparency: 0.1);
+
+        &:hover {
+            @include glassmorphism($transparency: 0.2);
+            // background-color: darken($base-color, 5%);
+        }
+    }
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: cornflowerblue;
+    height: 100vh;
+}

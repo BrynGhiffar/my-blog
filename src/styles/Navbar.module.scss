@@ -1,0 +1,49 @@
+@use "colors.scss";
+@use "values.scss";
+.main {
+    z-index: 100;
+    background-color: colors.$navbar-bg;
+    color: colors.$navbar-clr;
+    display: flex;
+    align-items: center;
+    height: values.$navbar-height;
+    font-size: 1.3rem;
+    box-shadow: 0px 0px 5px -1px;
+    position: fixed;
+    width: 100vw;
+    font-weight: bold;
+
+    .left {
+        display: flex;
+        justify-content: center;
+        .icon {
+            color: colors.$navbar-clr;
+        }
+    }
+
+    .right {
+        border-left: 4px solid colors.$navbar-clr;
+        padding-left: 10px;
+        height: 80%;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.drawer {
+    width: 250px;
+    color: colors.$drawer-clr;
+    background-color: colors.$drawer-bg;
+    height: 100%;
+}
+
+.item {
+    // background-color: red;
+    padding: 2px 0px;
+    padding-left: 10px;
+
+    .icon {
+        margin-right: 10px;
+        // outline: 1px solid red;
+    }
+}

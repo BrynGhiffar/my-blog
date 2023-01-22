@@ -1,0 +1,14 @@
+$navbar-height: 5vh;
+$regular-font-size: 1.3rem;
+
+@mixin main-top-padding() {
+    padding-top: $navbar-height + 10vh;
+}
+
+@mixin regular-font() {
+    font-size: $regular-font-size;
+}
+
+@mixin regular-margin() {
+    margin: 0px 20vh;
+}

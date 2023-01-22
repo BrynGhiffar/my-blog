@@ -1,0 +1,36 @@
+@use "values.scss";
+.main {
+    @include values.main-top-padding();
+    @include values.regular-font();
+    @include values.regular-margin();
+}
+
+
+.edit_user_dialog {
+    .field {
+        .input {
+            margin-top: 0.7rem;
+            display: block;
+        }
+        margin-bottom: 1rem;
+    }
+
+    .dialog_save {
+        margin-left: 1rem;
+    }
+}
+
+.edit_button {
+    margin-right: 1rem;
+}
+
+.control {
+    background-color: lighten(lightgray, 11%);
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    border-radius: 15px;
+
+    .create_button {
+        margin-right: 1rem;
+    }
+}
