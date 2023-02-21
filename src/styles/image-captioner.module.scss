@@ -1,0 +1,84 @@
+@use "values.scss";
+@use "colors.scss";
+
+$debug: false;
+
+.main {
+    @include values.main-top-padding();
+    @include values.regular-font();
+    @include values.regular-padding();
+    background-color: colors.$home-bg;
+    color: colors.$home-clr;
+    height: 100vh;
+}
+
+.caption_image_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    @if $debug {
+        outline: 1px solid red;
+    }
+    .caption_image {
+        height: 500px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 20px 0px black;
+    }
+}
+
+.caption_no_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    @if $debug {
+        outline: 1px solid red;
+    }
+    border-width: 0.3rem;
+    border-style: dashed;
+    border-color: colors.$home-clr;
+    border-radius: 5px;
+}
+
+.caption_url_input_wrapper {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    input {
+        height: 2rem;
+        width: 50rem;
+        font-size: 1.1rem;
+    }
+}
+
+.caption_image_caption {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.caption_buttons_wrapper {
+    @if $debug {
+        outline: 1px solid blue;
+    }
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.upload_button {
+    box-shadow: none;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.upload_button_arrow {
+    box-shadow: none;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}

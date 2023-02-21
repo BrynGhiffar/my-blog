@@ -4,8 +4,8 @@
 .main {
     @include values.main-top-padding();
     background-color: colors.$home-bg;
-    height: 100vh;
     color: colors.$home-clr;
+    height: 100vh;
 }
 
 .welcome {

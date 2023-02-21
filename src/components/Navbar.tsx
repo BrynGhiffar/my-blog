@@ -7,6 +7,7 @@ import { Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIc
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "@emotion/react";
+import { Visibility } from "@mui/icons-material";
 
 const theme = createTheme({
     typography: {
@@ -45,6 +46,13 @@ export default function Navbar() {
             name: "User Manager",
             onClick: () => {
                 router.push("/user-manager");
+            }
+        },
+        {
+            icon: <Visibility classes={{ root: styles.icon }} />,
+            name: "Image Captioner",
+            onClick: () => {
+                router.push("/image-captioner");
             }
         },
     ]

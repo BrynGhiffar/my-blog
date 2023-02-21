@@ -12,3 +12,8 @@ $regular-font-size: 1.3rem;
 @mixin regular-margin() {
     margin: 0px 20vh;
 }
+
+@mixin regular-padding() {
+    padding-left: 20vh;
+    padding-right: 20vh;
+}
