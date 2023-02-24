@@ -22,7 +22,7 @@ const theme = createTheme({
     },
 });
 
-async function ImageCaptionerHealthCheck(): bool {
+async function ImageCaptionerHealthCheck(): Promise<boolean> {
     try {
         const response = await fetch(`${IMAGE_CAPTIONER_HOST}/`);
         return response.status === 200;
