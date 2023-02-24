@@ -7,9 +7,10 @@ $debug: false;
     @include values.main-top-padding();
     @include values.regular-font();
     @include values.regular-padding();
+    padding-bottom: 200px;
     background-color: colors.$home-bg;
     color: colors.$home-clr;
-    height: 100vh;
+    // height: 100%;
 }
 
 .caption_image_wrapper {
@@ -55,7 +56,8 @@ $debug: false;
 }
 
 .caption_image_caption {
-    margin-top: 3rem;
+    margin-top: 1rem;
+    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;

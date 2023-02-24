@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "@emotion/react";
 import { Visibility } from "@mui/icons-material";
+import { useEffect, useCallback } from "react";
+import { IMAGE_CAPTIONER_HOST } from "@/env";
 
 const theme = createTheme({
     typography: {
@@ -20,42 +22,67 @@ const theme = createTheme({
     },
 });
 
+async function ImageCaptionerHealthCheck(): bool {
+    try {
+        const response = await fetch(`${IMAGE_CAPTIONER_HOST}/`);
+        return response.status === 200;
+    } catch (error) {
+        return false;
+    }
+
+}
+
 
 export default function Navbar() {
     const [ isDrawerOpen, setDrawerOpen ] = useState<boolean>(false);
+    const [ isImageCaptionerAlive, setImageCaptionerAlive ] = useState<boolean>(false);
     const router = useRouter();
     const name = "NeueSide";
 
-    const drawerItems = [
-        {
-            icon: <HomeIcon classes={{ root: styles.icon }} />,
-            name: "Home",
-            onClick: () => {
-                router.push("/");
-            }
-        },
-        {
-            icon: <LooksOneIcon classes={{ root: styles.icon }} />,
-            name: "Counter",
-            onClick: () => {
-                router.push("/counter");
-            }
-        },
-        {
-            icon: <PersonIcon classes={{ root: styles.icon }} />,
-            name: "User Manager",
-            onClick: () => {
-                router.push("/user-manager");
-            }
-        },
-        {
-            icon: <Visibility classes={{ root: styles.icon }} />,
-            name: "Image Captioner",
-            onClick: () => {
-                router.push("/image-captioner");
-            }
-        },
-    ]
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            const imageCaptionerAlive = await ImageCaptionerHealthCheck();
+            setImageCaptionerAlive(_ => imageCaptionerAlive);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const useDrawerItems = useCallback(() => (
+        [
+            {
+                icon: <HomeIcon classes={{ root: styles.icon }} />,
+                name: "Home",
+                enabled: true,
+                onClick: () => {
+                    router.push("/");
+                }
+            },
+            {
+                icon: <LooksOneIcon classes={{ root: styles.icon }} />,
+                name: "Counter",
+                enabled: true,
+                onClick: () => {
+                    router.push("/counter");
+                }
+            },
+            {
+                icon: <PersonIcon classes={{ root: styles.icon }} />,
+                name: "User Manager",
+                enabled: true,
+                onClick: () => {
+                    router.push("/user-manager");
+                }
+            },
+            {
+                icon: <Visibility classes={{ root: styles.icon }} />,
+                name: "Image Captioner",
+                enabled: isImageCaptionerAlive,
+                onClick: () => {
+                    router.push("/image-captioner");
+                }
+            },
+        ]
+    ), [isImageCaptionerAlive]);
 
     const toggleDrawerOpen = () => {
         setDrawerOpen(_prev => true);
@@ -89,9 +116,9 @@ export default function Navbar() {
                                 </ListItem>
                                 <Divider/>
                                 {
-                                    drawerItems.map(item =>
+                                    useDrawerItems().map(item =>
                                         <ListItem key={item.name} disablePadding>
-                                            <ListItemButton onClick={item.onClick} classes={{ root: styles.item }}>
+                                            <ListItemButton onClick={item.onClick} classes={{ root: styles.item }} disabled={!item.enabled}>
                                                 {item.icon}
                                                 {/* <ListItemIcon classes={{ root: styles.icon}}>
                                                 </ListItemIcon> */}

@@ -4,10 +4,9 @@ import styles from "@/styles/image-captioner.module.scss"
 import { useEffect, useRef, useState } from "react";
 import { Button, ButtonGroup, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { HOST, IMAGE_CAPTIONER_HOST } from '@/env';
 
 type nullString = string | null;
-const HOST = "http://localhost:3000";
-const CAPTIONING_HOST = "http://localhost:3005";
 
 const fetchImageBase64 = async (image_url: string): Promise<string> => {
     const url = `${HOST}/api/image`;
@@ -31,7 +30,7 @@ const fetchImageCaption = async (base_image_string: string): Promise<string> => 
     type ImageCaptionerResponse = {
         caption: string
     };
-    const url = `${CAPTIONING_HOST}/base64`;
+    const url = `${IMAGE_CAPTIONER_HOST}/base64`;
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     const req_body = JSON.stringify({
@@ -143,6 +142,9 @@ export default function ImageCaptioner() {
             <Navbar />
             <main className={styles.main}>
                 <ShowImage />
+                <div className={styles.caption_image_caption}>
+                    {imageCaption}
+                </div>
                 <div className={styles.caption_buttons_wrapper}>
                     <SplitButton
                         menuOptions={menuOptions}
@@ -190,9 +192,6 @@ export default function ImageCaptioner() {
                         </div>
                     ) : null
                 }
-                <div className={styles.caption_image_caption}>
-                    {imageCaption}
-                </div>
             </main>
         </>
     )
