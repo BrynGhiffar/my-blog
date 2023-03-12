@@ -1,0 +1,21 @@
+@use "colors.scss";
+@use "values.scss";
+
+.main {
+    background-color: colors.$home-bg;
+    color: colors.$home-clr;
+    height: 100vh;
+    @include values.regular-padding();
+    @include values.main-top-padding();
+
+    .login_fields {
+        background-color: colors.$navbar-bg;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        // background-color: red;
+        // border: solid green 1px;
+    }
+}

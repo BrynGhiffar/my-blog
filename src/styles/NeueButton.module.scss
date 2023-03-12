@@ -1,0 +1,14 @@
+@use "colors.scss";
+@use "values.scss";
+
+.main {
+    $text-color: colors.$navbar-bg;
+    $bg-color: colors.$navbar-clr;
+    color: black;
+    background-color: $bg-color;
+    font-weight: bold;
+    color: $text-color;
+    &:hover {
+        background-color: lighten($bg-color, 10%);
+    }
+}

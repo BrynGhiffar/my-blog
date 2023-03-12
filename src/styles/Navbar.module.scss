@@ -14,19 +14,33 @@
     font-weight: bold;
 
     .left {
+        flex-grow: 1;
         display: flex;
-        justify-content: center;
+        justify-content: left;
         .icon {
             color: colors.$navbar-clr;
         }
+
+        .logo {
+            border-left: 4px solid colors.$navbar-clr;
+            padding-left: 10px;
+            // height: 80%;
+            display: flex;
+            align-items: center;
+        }
+
     }
 
     .right {
-        border-left: 4px solid colors.$navbar-clr;
-        padding-left: 10px;
-        height: 80%;
+        flex-grow: 1;
         display: flex;
-        align-items: center;
+        justify-content: right;
+        margin-right: 2rem;
+
+        .button_container {
+            display: flex;
+            gap: 1rem;
+        }
     }
 }
 

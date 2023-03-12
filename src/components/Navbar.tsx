@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "@emotion/react";
 import { Visibility } from "@mui/icons-material";
+import { NeueButton } from "./NeueButton";
 
 const theme = createTheme({
     typography: {
@@ -105,9 +106,15 @@ export default function Navbar() {
                             </List>
                         </div>
                     </Drawer>
+                <div className={styles.logo}>
+                    {name}
+                </div>
                 </div>
                 <div className={styles.right}>
-                    {name}
+                    <div className={styles.button_container}>
+                        <NeueButton>Login</NeueButton>
+                        <NeueButton>Register</NeueButton>
+                    </div>
                 </div>
             </main>
         </>

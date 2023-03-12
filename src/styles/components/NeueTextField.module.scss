@@ -1,0 +1,11 @@
+.textfield {
+    font-size: 3rem;
+    border-color: red;
+}
+
+.textfield_input {
+    border-color: red;
+    &::after {
+        text-decoration-color: red;
+    }
+}
