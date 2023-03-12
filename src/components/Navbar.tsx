@@ -11,6 +11,7 @@ import { Visibility } from "@mui/icons-material";
 import { NeueButton } from "./NeueButton";
 import { useEffect, useCallback } from "react";
 import { IMAGE_CAPTIONER_HOST } from "@/env";
+import { NOT_LOGGED_IN_VAL, USER_TOKEN } from "@/local_storage";
 
 const theme = createTheme({
     typography: {
@@ -37,16 +38,28 @@ async function ImageCaptionerHealthCheck(): Promise<boolean> {
 export default function Navbar() {
     const [ isDrawerOpen, setDrawerOpen ] = useState<boolean>(false);
     const [ isImageCaptionerAlive, setImageCaptionerAlive ] = useState<boolean>(false);
+    const [ userToken, setUserToken ] = useState<string | null>(null);
     const router = useRouter();
     const name = "NeueSide";
 
     useEffect(() => {
-        const interval = setInterval(async () => {
-            const imageCaptionerAlive = await ImageCaptionerHealthCheck();
-            setImageCaptionerAlive(_ => imageCaptionerAlive);
-        }, 1000);
-        return () => clearInterval(interval);
+        // const interval = setInterval(async () => {
+        //     const imageCaptionerAlive = await ImageCaptionerHealthCheck();
+        //     setImageCaptionerAlive(_ => imageCaptionerAlive);
+        // }, 1000);
+        // return () => clearInterval(interval);
     }, []);
+
+    // use effect to get the user token;
+    useEffect(() => {
+        const userToken = localStorage.getItem(USER_TOKEN);
+        if (userToken === null) {
+            setUserToken(_ => NOT_LOGGED_IN_VAL);
+            return;
+        }
+        setUserToken(_ => userToken);
+    }, []);
+
 
     const useDrawerItems = useCallback(() => (
         [
@@ -84,6 +97,12 @@ export default function Navbar() {
             },
         ]
     ), [isImageCaptionerAlive]);
+    
+    const logoutHandler = () => {
+        localStorage.removeItem(USER_TOKEN);
+        router.reload();
+        router.push("/")
+    };
 
     const toggleDrawerOpen = () => {
         setDrawerOpen(_prev => true);
@@ -139,8 +158,20 @@ export default function Navbar() {
                 </div>
                 <div className={styles.right}>
                     <div className={styles.button_container}>
-                        <NeueButton>Login</NeueButton>
-                        <NeueButton>Register</NeueButton>
+                        {
+                            userToken === NOT_LOGGED_IN_VAL ? (
+                                <>
+                                    <NeueButton onClick={() => router.push("/login")}>Login</NeueButton>
+                                    <NeueButton onClick={() => router.push("/register")}>Register</NeueButton>
+                                </>
+                            ) : (
+                                <>
+                                    <NeueButton
+                                        onClick={logoutHandler}
+                                    >Logout</NeueButton>
+                                </>
+                            )
+                        }
                     </div>
                 </div>
             </main>

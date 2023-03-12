@@ -7,7 +7,7 @@
     @include values.regular-padding();
     @include values.main-top-padding();
 
-    .login_fields {
+    .fields {
         $with-border: false;
 
         margin: 0 25vw;

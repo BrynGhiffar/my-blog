@@ -1,10 +1,53 @@
 import Navbar from "@/components/Navbar";
-import { NeueTextField } from "@/components/NeueTextField";
+import { NeuePasswordField, NeueTextField } from "@/components/NeueTextField";
 import Head from "next/head";
 import styles from "@/styles/Login.module.scss";
+import { NeueButton } from "@/components/NeueButton";
+import { useState } from "react";
+import { USER_TOKEN } from "@/local_storage";
+import { useRouter } from "next/router";
+import { USER_MANAGER_RS_HOST } from "@/env";
+
+type UserLoginForm = {
+    email: string,
+    password: string,
+}
+
+type UserLoginTokenResponse = {
+    token: string
+}
+
+const emptyUserLoginForm = {
+    email: "",
+    password: ""
+}
+
+async function loginApi(userLoginForm: UserLoginForm): Promise<UserLoginTokenResponse> {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("email", userLoginForm.email);
+    urlencoded.append("password", userLoginForm.password);
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+    };
+
+    return await fetch(`${USER_MANAGER_RS_HOST}/user/login`, requestOptions)
+        .then(response => response.json())
+        .catch(error => console.log('error', error));
+}
 
 export default function Login() {
+    const [userLoginForm, setUserLoginForm] = useState(emptyUserLoginForm);
 
+    const onEmailChange = (val: string) => setUserLoginForm(f => ({...f, email: val}));
+    const onPasswordChange = (val: string) => setUserLoginForm(f => ({...f, password: val}));
+
+    const router = useRouter();
     return <>
         <Head>
             <title>NeueSide - Login</title>
@@ -15,18 +58,24 @@ export default function Login() {
         <Navbar/>
         <div>
         <main className={styles.main}>
-            <h1>Login Form</h1> 
             <div className={styles.login_fields}>
-                <div className={styles.text_field_wrapper}>
+                <h1 className={styles.title}>NeueSide</h1> 
                     <NeueTextField
                         label="Email"
+                        onChange={onEmailChange}
+                        value={userLoginForm.email}
                     />
-                </div>
-                <div className={styles.text_field_wrapper}>
-                    <NeueTextField
+                    <NeuePasswordField
                         label="Password"
+                        onChange={onPasswordChange}
+                        value={userLoginForm.password}
                     />
-                </div>
+                <NeueButton onClick={async () => {
+                    const res = await loginApi(userLoginForm);
+                    localStorage.setItem(USER_TOKEN, res.token);
+                    router.push("/");
+                }}>Login</NeueButton>
+                <NeueButton>Forgot Password</NeueButton>
             </div>
         </main>
         </div>

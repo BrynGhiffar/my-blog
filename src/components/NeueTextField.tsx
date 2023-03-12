@@ -1,12 +1,14 @@
-import { styled, TextField, typographyClasses } from "@mui/material";
-import { PropsWithChildren } from "react";
+import { IconButton, InputAdornment, styled, TextField, typographyClasses } from "@mui/material";
+import { PropsWithChildren, useState } from "react";
 import styles from "@/styles/components/NeueTextField.module.scss";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 
 type NeueTextFieldProps = {
     label: string,
     helperText?: string,
-    onChange?: () => void
+    onChange?: (val: string) => void
+    value?: string
 };
 
 const TEXTFIELD_COLOR = "#333d29";
@@ -37,11 +39,45 @@ export function NeueTextField(props: PropsWithChildren<NeueTextFieldProps>) {
         classes={{ root: styles.textfield}}
         label={props.label}
         helperText={props.helperText}
-        onChange={props.onChange}
+        onChange={({target}) => props.onChange ? props.onChange!(target.value) : undefined}
+        value={props.value}
         variant="outlined"
         inputProps={{
             className: styles.textfield_input
         }}
+        fullWidth
+        >
+            {props.children}
+        </CssTextField>
+}
+
+export function NeuePasswordField(props: PropsWithChildren<NeueTextFieldProps>) {
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
+    return <CssTextField
+        classes={{ root: styles.textfield}}
+        label={props.label}
+        helperText={props.helperText}
+        onChange={({target}) => props.onChange ? props.onChange!(target.value) : undefined}
+        value={props.value}
+        variant="outlined"
+        InputProps={{
+            className: styles.textfield_input,
+            endAdornment: (
+                <InputAdornment position="end">
+                    <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                </InputAdornment>
+            )
+        }}
+        fullWidth
+       type={showPassword ? "text" : "password"}
         >
             {props.children}
         </CssTextField>
